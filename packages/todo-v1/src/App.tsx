@@ -1,7 +1,8 @@
 import "./App.css";
+import TodoApp from "./components/TodoApp";
 
 function App() {
-  return <h1>Sri Rama</h1>;
+  return <TodoApp />;
 }
 
 export default App;
