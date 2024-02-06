@@ -54,10 +54,7 @@ const TodoInputForm: React.FC<TodoInputFormProps> = ({ addTodo }) => {
           },
         ]}
       >
-        <Input
-          ref={inputRef}
-          placeholder="Offload your mind: Enter a task and focus elsewhere"
-        />
+        <Input ref={inputRef} placeholder="Offload your mind" />
       </Form.Item>
     </Form>
   );

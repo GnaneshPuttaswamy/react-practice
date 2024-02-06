@@ -56,7 +56,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   const onCancelClick = () => {
     console.log("Cancel clicked");
-    setIsEditing(false); // Switch back to view mode
+    setIsEditing(false);
   };
 
   const handleUpdate = () => {
@@ -126,7 +126,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
                 fontWeight: "bold",
               }}
               value={title}
-              placeholder="Offload your mind: Enter a task and focus elsewhere"
+              placeholder="Updated idea?"
             />
           </Form.Item>
         </Form>
