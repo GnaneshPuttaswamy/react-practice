@@ -1,13 +1,31 @@
 import { Form, Input } from "antd";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 type FieldType = {
   todoText?: string;
 };
 
-function TodoInputForm() {
+interface TodoInputFormProps {
+  addTodo: (title: string) => void;
+}
+
+const TodoInputForm: React.FC<TodoInputFormProps> = ({ addTodo }) => {
+  const [todoInputForm] = Form.useForm();
+  const inputRef = useRef(null);
+  const [focusInput, setFocusInput] = React.useState(false);
+
+  useEffect(() => {
+    if (focusInput) {
+      inputRef.current && inputRef.current.focus();
+      setFocusInput(false);
+    }
+  }, [focusInput]);
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    addTodo(values.todoText);
+    todoInputForm.resetFields();
+    setFocusInput(true);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -17,6 +35,7 @@ function TodoInputForm() {
   return (
     <Form
       name="todo-input-form"
+      form={todoInputForm}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -35,10 +54,14 @@ function TodoInputForm() {
           },
         ]}
       >
-        <Input placeholder="Offload your mind: Enter a task and focus elsewhere" />
+        <Input
+          ref={inputRef}
+          placeholder="Offload your mind: Enter a task and focus elsewhere"
+        />
       </Form.Item>
     </Form>
   );
-}
+};
 
+TodoInputForm.displayName = "TodoInputForm";
 export default TodoInputForm;
