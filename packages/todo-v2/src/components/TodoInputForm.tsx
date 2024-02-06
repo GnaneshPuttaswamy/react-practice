@@ -1,5 +1,6 @@
 import { Form, Input } from "antd";
 import React, { useEffect, useRef } from "react";
+import useToggleState from "../customHooks/useToggleState";
 
 type FieldType = {
   todoText?: string;
@@ -12,12 +13,12 @@ interface TodoInputFormProps {
 const TodoInputForm: React.FC<TodoInputFormProps> = ({ addTodo }) => {
   const [todoInputForm] = Form.useForm();
   const inputRef = useRef(null);
-  const [focusInput, setFocusInput] = React.useState(false);
+  const [focusInput, toggleFocusInput] = useToggleState(false);
 
   useEffect(() => {
     if (focusInput) {
       inputRef.current && inputRef.current.focus();
-      setFocusInput(false);
+      toggleFocusInput();
     }
   }, [focusInput]);
 
@@ -25,7 +26,7 @@ const TodoInputForm: React.FC<TodoInputFormProps> = ({ addTodo }) => {
     console.log("Success:", values);
     addTodo(values.todoText);
     todoInputForm.resetFields();
-    setFocusInput(true);
+    toggleFocusInput();
   };
 
   const onFinishFailed = (errorInfo: any) => {

@@ -7,6 +7,7 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import useToggleState from "../customHooks/useToggleState";
 
 const CustomListItemMeta = styled(List.Item.Meta)`
   .ant-list-item-meta-title {
@@ -37,7 +38,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   editTodo,
   deleteTodo,
 }: any) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, toggleIsEditing] = useToggleState(false);
   const [todoEditForm] = Form.useForm();
   const inputRef = useRef(null);
 
@@ -50,19 +51,19 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const onEditClick = (e: any) => {
     console.log("Edit clicked");
     console.log("isEditing", isEditing);
-    setIsEditing(!isEditing);
+    toggleIsEditing();
     todoEditForm.setFieldsValue({ todotext: title });
   };
 
   const onCancelClick = () => {
     console.log("Cancel clicked");
-    setIsEditing(false);
+    toggleIsEditing();
   };
 
   const handleUpdate = () => {
     const todotextValue = todoEditForm.getFieldValue("todotext");
     editTodo(id, todotextValue);
-    setIsEditing(!isEditing);
+    toggleIsEditing();
   };
 
   const onFinishFailed = (errorInfo: any) => {
