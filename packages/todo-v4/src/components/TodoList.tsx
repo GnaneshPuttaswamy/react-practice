@@ -6,7 +6,7 @@ import { TodoContext } from "../context/todo.context";
 const TodoList: React.FC = () => {
   const { todos } = useContext(TodoContext);
 
-  console.log("Inside TodoList");
+  console.log("<-> TODO LIST<->");
 
   return (
     <List

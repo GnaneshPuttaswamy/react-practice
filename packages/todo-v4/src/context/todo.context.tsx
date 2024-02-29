@@ -1,38 +1,48 @@
-import { createContext } from "react";
+import { Dispatch, createContext, useReducer } from "react";
 import { Todo } from "../components/TodoApp";
-import useTodoState from "../customHooks/useTodoState";
+import todoReducer, { TodoAction } from "../reducers/todo.reducer";
 
 interface TodoContextProps {
   todos: Todo[];
-  addTodo: (title: string) => void;
-  toggleTodo: (id: string) => void;
-  editTodo: (id: string, title: string) => void;
-  deleteTodo: (id: string) => void;
+  dispatch: Dispatch<TodoAction>;
 }
 
 const TodoContext = createContext<TodoContextProps>({
   todos: [],
-  addTodo: (title: string) => {
-    console.log("Inside default addTodo() : title =====> ", title);
-  },
-  toggleTodo: (id: string) => {
-    console.log("Inside default toggleTodo() : title =====> ", id);
-  },
-  editTodo: (id: string, title: string) => {
-    console.log("Inside default addTodo() : id =====> ", id);
-    console.log("Inside default addTodo() : title =====> ", title);
-  },
-  deleteTodo: (id: string) => {
-    console.log("Inside default addTodo() : id =====> ", id);
+  dispatch: () => {
+    console.log("Inside default dispatch()");
   },
 });
 
+const initialTodos: Todo[] = [
+  {
+    id: "1",
+    title: "Todo 1",
+    isCompleted: false,
+  },
+  {
+    id: "2",
+    title: "Todo 2",
+    isCompleted: true,
+  },
+  {
+    id: "3",
+    title: "Todo 3",
+    isCompleted: true,
+  },
+  {
+    id: "4",
+    title: "Todo 4",
+    isCompleted: false,
+  },
+];
+
 const TodoProvider = (props: any) => {
-  const todosData = useTodoState();
-  console.log("todosData =====>", todosData);
+  const [todos, dispatch] = useReducer(todoReducer, initialTodos);
+  console.log("todosData =====>", todos);
 
   return (
-    <TodoContext.Provider value={todosData}>
+    <TodoContext.Provider value={{ todos, dispatch }}>
       {props.children}
     </TodoContext.Provider>
   );

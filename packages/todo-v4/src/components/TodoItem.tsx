@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import useToggleState from "../customHooks/useToggleState";
 import { TodoContext } from "../context/todo.context";
+import { EditAction } from "../reducers/todo.reducer";
 
 const CustomListItemMeta = styled(List.Item.Meta)`
   .ant-list-item-meta-title {
@@ -32,9 +33,10 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
   const [isEditing, toggleIsEditing] = useToggleState(false);
   const [todoEditForm] = Form.useForm();
   const inputRef = useRef(null);
-  const { toggleTodo, editTodo, deleteTodo } = useContext(TodoContext);
+  // const { toggleTodo, editTodo, deleteTodo } = useContext(TodoContext);
+  const { dispatch } = useContext(TodoContext);
 
-  console.log("Inside TodoItem");
+  console.log("<-> TODO ITEM<->");
 
   useEffect(() => {
     if (isEditing) {
@@ -56,7 +58,15 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
 
   const handleUpdate = () => {
     const todotextValue = todoEditForm.getFieldValue("todotext");
-    editTodo(id, todotextValue);
+    // editTodo(id, todotextValue);
+    const editAction: EditAction = {
+      type: "EDIT",
+      id,
+      title: todotextValue,
+    };
+    console.log("editAction =====> ", editAction);
+
+    dispatch(editAction);
     toggleIsEditing();
   };
 
@@ -80,7 +90,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
     : [
         <Button onClick={onEditClick} shape="circle" icon={<EditOutlined />} />,
         <Button
-          onClick={() => deleteTodo(id)}
+          onClick={() => dispatch({ type: "DELETE", id })}
           shape="circle"
           icon={<DeleteOutlined />}
         />,
@@ -89,7 +99,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
   return (
     <List.Item key={id} actions={actions}>
       <Checkbox
-        onClick={() => toggleTodo(id)}
+        onClick={() => dispatch({ type: "TOGGLE", id })}
         checked={isCompleted}
         style={{ marginRight: "10px" }}
       />
