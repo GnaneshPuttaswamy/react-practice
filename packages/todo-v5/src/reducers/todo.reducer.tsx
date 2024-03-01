@@ -47,14 +47,9 @@ const todoReducer = (state: Todo[], action: TodoAction) => {
     }
     case "EDIT": {
       console.log("-- Inside EDIT --");
-      console.log("action =====> ", action);
-
-      // return state.map((todo: Todo) =>
-      //   todo.id === action.id ? { ...todo, task: action.title } : todo
-      // );
       return state.map(
         (todo: Todo): Todo =>
-          todo.id === action.id ? { ...todo, title: "Rama" } : todo
+          todo.id === action.id ? { ...todo, title: action.title } : todo
       );
     }
     case "DELETE": {

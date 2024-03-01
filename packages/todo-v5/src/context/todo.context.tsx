@@ -2,16 +2,10 @@ import { Dispatch, createContext, useReducer } from "react";
 import { Todo } from "../components/TodoApp";
 import todoReducer, { TodoAction } from "../reducers/todo.reducer";
 
-interface TodoContextProps {
-  todos: Todo[];
-  dispatch: Dispatch<TodoAction>;
-}
+const TodoContext = createContext<Todo[]>([]);
 
-const TodoContext = createContext<TodoContextProps>({
-  todos: [],
-  dispatch: () => {
-    console.log("Inside default dispatch()");
-  },
+const DispatcherContext = createContext<Dispatch<TodoAction>>(() => {
+  console.log("DispatcherContext.Provider default dispatch function");
 });
 
 const initialTodos: Todo[] = [
@@ -42,8 +36,10 @@ const TodoProvider = (props: any) => {
   console.log("todosData =====>", todos);
 
   return (
-    <TodoContext.Provider value={{ todos, dispatch }}>
-      {props.children}
+    <TodoContext.Provider value={todos}>
+      <DispatcherContext.Provider value={dispatch}>
+        {props.children}
+      </DispatcherContext.Provider>
     </TodoContext.Provider>
   );
 };
@@ -51,4 +47,4 @@ const TodoProvider = (props: any) => {
 TodoContext.displayName = "TodoContext";
 TodoProvider.displayName = "TodoProvider";
 
-export { TodoContext, TodoProvider };
+export { TodoContext, TodoProvider, DispatcherContext };

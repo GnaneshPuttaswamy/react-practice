@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import React, { useContext, useEffect, useRef } from "react";
 import useToggleState from "../customHooks/useToggleState";
-import { TodoContext } from "../context/todo.context";
+import { DispatcherContext } from "../context/todo.context";
 import { AddAction } from "../reducers/todo.reducer";
 
 type FieldType = {
@@ -12,7 +12,7 @@ const TodoInputForm: React.FC = () => {
   const [todoInputForm] = Form.useForm();
   const inputRef = useRef(null);
   const [focusInput, toggleFocusInput] = useToggleState(false);
-  const { dispatch } = useContext(TodoContext);
+  const dispatch = useContext(DispatcherContext);
 
   console.log("<-> TODO INPUT FORM<->");
 

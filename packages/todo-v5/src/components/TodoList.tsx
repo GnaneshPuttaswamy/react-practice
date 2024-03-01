@@ -4,7 +4,7 @@ import TodoItem from "./TodoItem";
 import { TodoContext } from "../context/todo.context";
 
 const TodoList: React.FC = () => {
-  const { todos } = useContext(TodoContext);
+  const todos = useContext(TodoContext);
 
   console.log("<-> TODO LIST<->");
 

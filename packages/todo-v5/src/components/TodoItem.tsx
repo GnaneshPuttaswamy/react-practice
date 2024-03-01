@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import useToggleState from "../customHooks/useToggleState";
-import { TodoContext } from "../context/todo.context";
+import { DispatcherContext } from "../context/todo.context";
 import { EditAction } from "../reducers/todo.reducer";
 
 const CustomListItemMeta = styled(List.Item.Meta)`
@@ -33,8 +33,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
   const [isEditing, toggleIsEditing] = useToggleState(false);
   const [todoEditForm] = Form.useForm();
   const inputRef = useRef(null);
-  // const { toggleTodo, editTodo, deleteTodo } = useContext(TodoContext);
-  const { dispatch } = useContext(TodoContext);
+  const dispatch = useContext(DispatcherContext);
 
   console.log("<-> TODO ITEM<->");
 
@@ -58,7 +57,6 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
 
   const handleUpdate = () => {
     const todotextValue = todoEditForm.getFieldValue("todotext");
-    // editTodo(id, todotextValue);
     const editAction: EditAction = {
       type: "EDIT",
       id,
