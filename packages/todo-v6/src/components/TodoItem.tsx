@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { memo, useContext, useEffect, useRef } from "react";
 import { Button, Checkbox, Form, Input, List, Typography } from "antd";
 import {
   EditOutlined,
@@ -141,4 +141,4 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, isCompleted }: any) => {
 };
 
 TodoItem.displayName = "TodoItem";
-export default TodoItem;
+export default memo(TodoItem);
